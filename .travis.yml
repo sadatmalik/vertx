@@ -1,0 +1,40 @@
+language: java
+
+branches:
+  only:
+    - master
+    - chapter12/public-api-with-timeouts
+    - chapter12/public-api-with-circuit-breaker
+    - chapter12/public-api-with-circuit-breaker-and-timeouts
+
+services:
+  - docker
+
+install: true
+
+jdk:
+  - openjdk8
+  - openjdk11
+
+env:
+  - PROJECT=chapter1
+  - PROJECT=chapter2
+  - PROJECT=chapter3
+  - PROJECT=chapter4
+  - PROJECT=chapter5
+  - PROJECT=chapter6
+  - PROJECT=chapter13
+  - PROJECT=part2-steps-challenge
+
+script:
+  - cd $PROJECT
+  - ./gradlew build --console=plain --refresh-dependencies
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
